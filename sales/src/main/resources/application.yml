@@ -1,0 +1,12 @@
+server:
+  port: 8082
+  error:
+    include-message: always
+    include-stacktrace: on_param
+    include-binding-errors: always
+
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+    deserialization:
+      fail-on-unknown-properties: false
