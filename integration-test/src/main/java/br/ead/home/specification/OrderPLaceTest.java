@@ -9,6 +9,6 @@ public class OrderPLaceTest {
     @Test
     @DisplayName("Should be able to place a order when user requesting a purchase")
     void shouldPlaceOrderWhenRequested() {
-        Assertions.assertTrue(true, "should be able to place a order");
+        Assertions.fail("should be able to place a order");
     }
 }
