@@ -1,4 +1,4 @@
-package br.com.ead.wearhouse;
+package br.com.ead.warehouse;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,3 +1,4 @@
+apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
 
 allprojects {
@@ -21,12 +22,35 @@ allprojects {
 buildscript {
     ext {
         springBootVersion = "2.6.2"
+        dockerComposeVersion = "0.14.9"
     }
+
     repositories {
         mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
 
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "gradle.plugin.com.avast.gradle:gradle-docker-compose-plugin:${dockerComposeVersion}"
+    }
+}
+
+apply plugin: 'com.avast.gradle.docker-compose'
+
+dockerCompose.isRequiredBy(test)
+
+dockerCompose {
+    projectName = project.name
+    projectNamePrefix = 'docker-compose'
+    stopContainers = true
+    removeContainers = true
+    removeOrphans = true
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "skipped", "failed"
     }
 }
