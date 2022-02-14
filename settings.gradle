@@ -3,3 +3,5 @@ include "payments"
 include "sales"
 include "warehouse"
 include "common-events"
+include 'orchestrator'
+
