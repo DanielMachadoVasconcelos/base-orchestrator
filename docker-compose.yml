@@ -7,7 +7,6 @@ services:
     ports:
       - 9092:9092
       - 9093:9093
-
     environment:
       CLUSTER_ID: 5Yr1SIgYQz-b-dgRabWx4g
       BROKER_ID: 1
@@ -37,6 +36,16 @@ services:
       interval: 2s
       timeout: 5s
       retries: 5
+
+  integration-tests:
+    build:
+      context: integration-test
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka
+      - postgres
+    networks:
+      - integration-test
 
 volumes:
   postgres_data:

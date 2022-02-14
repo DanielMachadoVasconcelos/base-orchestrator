@@ -22,4 +22,5 @@ avro:
 publish-to-maven-local:
 	$(GW_PARALLEL) publishToMavenLocal
 
-
+bt: #Build & docker-compose test
+	$(GW_PARALLEL) clean build shadowJar && docker-compose up --abort-on-container-exit -V --build integration-tests

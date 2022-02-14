@@ -1,6 +1,6 @@
 plugins {
     id "java"
-    id "java-library"
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 configurations {
@@ -13,8 +13,27 @@ dependencies {
 
     implementation 'org.slf4j:slf4j-api'
     implementation 'org.apache.logging.log4j:log4j-api'
+    implementation 'org.apache.logging.log4j:log4j-iostreams:2.8.1'
+
     implementation 'org.apache.logging.log4j:log4j-core'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    implementation 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+    implementation 'org.junit.platform:junit-platform-launcher:1.2.0'
+
+}
+
+shadowJar {
+    archiveBaseName.set('integration-test')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+    configurations = [project.configurations.compileClasspath]
+
+    manifest {
+        attributes 'Build-Date': new Date(),
+                'Main-Class': 'br.ead.home.IntegrationTestRunner',
+                'Build-JDK': System.getProperty('java.version'),
+                'Service-Name': "$project.archivesBaseName",
+                'Service-Version': "$project.version"
+    }
 }
