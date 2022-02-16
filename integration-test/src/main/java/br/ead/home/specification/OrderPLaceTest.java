@@ -10,11 +10,11 @@ import java.util.UUID;
 
 public class OrderPLaceTest {
 
+    private SalesClient client = new SalesClient();
+
     @Test
     @DisplayName("Should be able to place a order when user requesting a purchase")
     void shouldPlaceOrderWhenRequested() {
-
-        var client = new SalesClient();
 
         var request = new PlaceOrderRequest(UUID.randomUUID().toString(), 100);
         var response = client.placeOrder(request);

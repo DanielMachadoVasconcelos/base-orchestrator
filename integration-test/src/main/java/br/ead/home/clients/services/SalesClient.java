@@ -30,11 +30,11 @@ public class SalesClient {
                 .responseTimeout(Duration.ofMillis(5000))
                 .doOnConnected(conn ->
                         conn.addHandlerLast(new ReadTimeoutHandler(5000, TimeUnit.MILLISECONDS))
-                                .addHandlerLast(new WriteTimeoutHandler(5000, TimeUnit.MILLISECONDS)));
+                            .addHandlerLast(new WriteTimeoutHandler(5000, TimeUnit.MILLISECONDS)));
 
         client = WebClient.builder()
-                .baseUrl("http://localhost:8082")
-                .filter(ExchangeFilterFunctions.basicAuthentication("admin", "password"))
+                .baseUrl("http://sales:8082")
+                .filter(ExchangeFilterFunctions.basicAuthentication("user", "password"))
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build()
@@ -48,11 +48,6 @@ public class SalesClient {
                 .retrieve()
                 .bodyToMono(String.class)
                 .log()
-                .block()
-                ;
-    }
-
-    public static String randomIdempotencyId() {
-        return UUID.randomUUID().toString();
+                .block();
     }
 }
