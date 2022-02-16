@@ -1,49 +1,29 @@
 version: '3.7'
 services:
 
-  kafka:
-    image: debezium/kafka:1.7
-    container_name: kafka
+  sales:
+    container_name: sales
+    build:
+      context: sales
+      dockerfile: Dockerfile
     ports:
-      - 9092:9092
-      - 9093:9093
-    environment:
-      CLUSTER_ID: 5Yr1SIgYQz-b-dgRabWx4g
-      BROKER_ID: 1
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
-      CREATE_TOPICS: "sa:1:1,businesses:1:1"
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      - "8082:8082"
     networks:
       - integration-test
-
-  postgres:
-    image: postgres:14.1-alpine
-    container_name: postgres
-    networks:
-      - integration-test
-    volumes:
-      - "postgres_data:/var/lib/postgresql/data"
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: username
-      POSTGRES_DB: broker
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
-      interval: 2s
-      timeout: 5s
-      retries: 5
+      test: "curl -f http://sales:8082/actuator/health"
+      retries: 10
+      interval: 1s
+      start_period: 2s
 
   integration-tests:
+    container_name: integration-test
     build:
       context: integration-test
       dockerfile: Dockerfile
     depends_on:
-      - kafka
-      - postgres
+      sales:
+        condition: service_healthy
     networks:
       - integration-test
 
