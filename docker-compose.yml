@@ -37,13 +37,28 @@ services:
       timeout: 5s
       retries: 5
 
+  sales:
+    container_name: sales
+    build:
+      context: sales
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - integration-test
+    healthcheck:
+      test: "curl -f http://sales:8082/actuator/health"
+      retries: 10
+
   integration-tests:
+    container_name: integration-test
     build:
       context: integration-test
       dockerfile: Dockerfile
     depends_on:
       - kafka
       - postgres
+      - sales
     networks:
       - integration-test
 
