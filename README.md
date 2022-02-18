@@ -1,4 +1,4 @@
-# Bank Account Service
+# Sales Application Service
 ## Daniel Machado Vasconcelos
 
 This repository serve the propose of ilustrating the Saga Pattern with Orchestration. 
