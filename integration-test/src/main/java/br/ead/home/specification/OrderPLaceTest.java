@@ -1,25 +1,51 @@
 package br.ead.home.specification;
 
-import br.com.ead.sales.model.PlaceOrderRequest;
+import br.com.ead.sales.OrderLine;
+import br.com.ead.sales.PaymentMethod;
+import br.com.ead.sales.commands.OrderPLaceCommand;
 import br.ead.home.clients.services.SalesClient;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
+import java.util.Set;
 import java.util.UUID;
 
 public class OrderPLaceTest {
 
-    private SalesClient client = new SalesClient();
+    private final SalesClient client = new SalesClient();
 
     @Test
     @DisplayName("Should be able to place a order when user requesting a purchase")
     void shouldPlaceOrderWhenRequested() {
 
-        var request = new PlaceOrderRequest(UUID.randomUUID().toString(), 100);
-        var response = client.placeOrder(request);
+        //given: A place order command
+        var expectedOrderAmount = 100;
+        var expectedCustomerId = UUID.randomUUID().toString();
+        var expectedProductId = UUID.randomUUID().toString();
+        var orderLine = OrderLine.builder()
+                .productId(expectedProductId)
+                .quantity(1)
+                .unitPrice(20.0D).build();
 
-//        Assertions.assertTrue(response.statusCode() == 200, "Should place the order successfully");
-        Assertions.assertNotNull(response, "Should place the order successfully");
+        var command = new OrderPLaceCommand(expectedOrderAmount,
+                expectedCustomerId,
+                PaymentMethod.CREDIT_CARD,
+                "USD",
+                Set.of(orderLine));
+
+        //when: placing the order
+        var response = client.placeOrder(command);
+
+        //then: the response is successful
+        response.expectStatus().isOk()
+                .expectHeader().valueEquals(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .expectBody().jsonPath("id").exists();
+
+        //and: package label is generated
+
+        //and: a payment reservation is created
+
     }
 }

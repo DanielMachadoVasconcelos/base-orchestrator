@@ -23,5 +23,5 @@ jobs:
         with:
           java-version: 17
           distribution: 'adopt'
-      - name: build and test application
+      - name: builda and test the application
         run: make bt

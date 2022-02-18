@@ -1,20 +1,35 @@
 package br.com.ead.sales.controllers;
 
-import br.com.ead.sales.model.PlaceOrderRequest;
+import br.com.ead.sales.commands.OrderPLaceCommand;
+import br.com.ead.sales.commons.dtos.BaseResponse;
+import br.com.ead.sales.commons.dtos.OrderPLaceResponse;
+import br.com.ead.infrastructure.CommandDispatcher;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/services/")
+@RequestMapping("/api/v1/orders")
 public class OrderController {
 
-    @PostMapping(path = "/orders")
-    private Mono<String> pokeServiceUri(@RequestBody PlaceOrderRequest request) {
-        return Mono.fromCallable(() -> request.toString());
+    CommandDispatcher commandDispatcher;
+
+    @PostMapping
+    private BaseResponse placeOrder(@RequestBody @Valid @NotNull OrderPLaceCommand command) {
+        var id = Optional.ofNullable(command.getId()).orElseGet(UUID.randomUUID()::toString);
+        command.setId(id);
+        commandDispatcher.send(command);
+        return OrderPLaceResponse.builder()
+                .id(id)
+                .message("Order place request completed successfully!")
+                .build();
     }
 }

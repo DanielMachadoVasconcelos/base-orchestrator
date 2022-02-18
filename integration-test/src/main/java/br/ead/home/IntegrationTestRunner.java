@@ -14,7 +14,6 @@ import org.junit.platform.launcher.listeners.TestExecutionSummary;
 
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.sql.DriverManager;
 
 import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPackage;
@@ -37,7 +36,7 @@ public class IntegrationTestRunner {
         launcher.execute(request);
 
         PrintWriter logger = IoBuilder.forLogger(IntegrationTestRunner.class)
-                .setLevel(Level.INFO)
+                .setLevel(Level.DEBUG)
                 .setCharset(StandardCharsets.UTF_8)
                 .setBufferSize(1000)
                 .buildPrintWriter();
@@ -50,6 +49,7 @@ public class IntegrationTestRunner {
         loggingListener.testPlanExecutionFinished(testPlan);
 
         int exitCode = isSuccessful(summary) ? 0 : 1;
+        log.info("Running Integration Tests exit code: {}", exitCode);
         System.exit(exitCode);
     }
 
