@@ -1,12 +1,15 @@
 package br.ead.home.specification;
 
-import br.com.ead.sales.model.PlaceOrderRequest;
+import br.com.ead.sales.commands.OrderPLaceCommand;
+import br.com.ead.sales.model.OrderLine;
+import br.com.ead.sales.model.PaymentMethod;
 import br.ead.home.clients.services.SalesClient;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import java.util.Set;
 import java.util.UUID;
 
 public class OrderPLaceTest {
@@ -17,18 +20,28 @@ public class OrderPLaceTest {
     @DisplayName("Should be able to place a order when user requesting a purchase")
     void shouldPlaceOrderWhenRequested() {
 
-        //given: A place order request
-        var expectedOrderId = UUID.randomUUID().toString();
+        //given: A place order command
         var expectedOrderAmount = 100;
-        var request = new PlaceOrderRequest(expectedOrderId, expectedOrderAmount);
+        var expectedCustomerId = UUID.randomUUID().toString();
+        var expectedProductId = UUID.randomUUID().toString();
+        var orderLine = OrderLine.builder()
+                .productId(expectedProductId)
+                .quantity(1)
+                .unitPrice(20.0D).build();
+
+        var command = new OrderPLaceCommand(expectedOrderAmount,
+                expectedCustomerId,
+                PaymentMethod.CREDIT_CARD,
+                "USD",
+                Set.of(orderLine));
 
         //when: placing the order
-        var response = client.placeOrder(request);
+        var response = client.placeOrder(command);
 
         //then: the response is successful
         response.expectStatus().isOk()
                 .expectHeader().valueEquals(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .expectBody().jsonPath("place_order_amount").isEqualTo(expectedOrderAmount);
+                .expectBody().jsonPath("id").exists();
 
         //and: package label is generated
 

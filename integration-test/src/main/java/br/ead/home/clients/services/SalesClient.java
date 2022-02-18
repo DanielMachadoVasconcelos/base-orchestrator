@@ -1,6 +1,6 @@
 package br.ead.home.clients.services;
 
-import br.com.ead.sales.model.PlaceOrderRequest;
+import br.com.ead.sales.commands.OrderPLaceCommand;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -8,24 +8,31 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunctions;
 
+import java.util.Optional;
+
 @Log4j2
 public class SalesClient {
 
     private final WebTestClient client;
 
     public SalesClient() {
+        var salesHost = System.getenv("SALES_HOST");
+        var baseUrl = "http://%s:8082".formatted(Optional.ofNullable(salesHost).orElse("localhost"));
+        log.debug("Sales Host: {}", salesHost);
+        log.debug("Sales base host: {}", baseUrl);
         client = WebTestClient.bindToServer()
-                .filter(ExchangeFilterFunctions.basicAuthentication("user", "password"))
+                .filter(ExchangeFilterFunctions.basicAuthentication("admin", "password"))
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .baseUrl("http://localhost:8082")
+                .baseUrl(baseUrl)
                 .build();
     }
 
-    public WebTestClient.ResponseSpec placeOrder(PlaceOrderRequest placeOrderRequest) {
+    public WebTestClient.ResponseSpec placeOrder(OrderPLaceCommand command) {
+        log.debug("Placing and order: {}", command);
         return client
                 .post()
-                .uri("/services/orders")
-                .body(BodyInserters.fromValue(placeOrderRequest))
+                .uri("/api/v1/orders")
+                .body(BodyInserters.fromValue(command))
                 .exchange();
     }
 }

@@ -1,12 +1,26 @@
 plugins {
     id "java"
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id "com.avast.gradle.docker-compose" version "0.14.9"
+
 }
 
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+}
+
+apply plugin: 'com.avast.gradle.docker-compose'
+
+dockerCompose.isRequiredBy(test)
+
+dockerCompose {
+    projectName = project.name
+    projectNamePrefix = 'docker-compose'
+    stopContainers = true
+    removeContainers = true
+    removeOrphans = true
 }
 
 dependencies {

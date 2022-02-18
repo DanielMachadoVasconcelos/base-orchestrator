@@ -47,18 +47,7 @@ buildscript {
     }
 }
 
-//TODO: This is being replaced by the Make file
-//apply plugin: 'com.avast.gradle.docker-compose'
-//
-//dockerCompose.isRequiredBy(test)
-//
-//dockerCompose {
-//    projectName = project.name
-//    projectNamePrefix = 'docker-compose'
-//    stopContainers = true
-//    removeContainers = true
-//    removeOrphans = true
-//}
+
 
 test {
     useJUnitPlatform()

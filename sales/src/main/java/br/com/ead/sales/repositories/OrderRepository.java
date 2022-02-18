@@ -1,10 +1,12 @@
 package br.com.ead.sales.repositories;
 
-import br.com.ead.sales.entities.Order;
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import br.com.ead.sales.events.EventModel;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface OrderRepository extends ReactiveCrudRepository<Order, String> {
+import java.util.List;
 
+@Repository
+public interface OrderRepository extends ElasticsearchRepository<EventModel, String> {
+    List<EventModel> findByAggregatedIdentifier(String aggregatedIdentifier);
 }
