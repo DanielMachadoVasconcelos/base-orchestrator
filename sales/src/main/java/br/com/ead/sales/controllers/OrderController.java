@@ -13,8 +13,9 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/services/")
 public class OrderController {
 
+    //TODO: Implement the service layer. Persist the order in database. Emit the OrderPLacedEvent in kafka.
     @PostMapping(path = "/orders")
-    private Mono<String> pokeServiceUri(@RequestBody PlaceOrderRequest request) {
-        return Mono.fromCallable(() -> request.toString());
+    private Mono<PlaceOrderRequest> pokeServiceUri(@RequestBody PlaceOrderRequest request) {
+        return Mono.fromCallable(() -> request);
     }
 }
