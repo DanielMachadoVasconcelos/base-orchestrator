@@ -1,4 +1,4 @@
-# Sales Application Service
+# Bank Account Service
 ## Daniel Machado Vasconcelos
 
 This repository serve the propose of ilustrating the Saga Pattern with Orchestration. 
@@ -34,6 +34,29 @@ Prerequisites
 I used kafka as my message broker in order to coordenate between the services
 
 **Elasticsearch**
+
+This database saves the list of events in order, ensured by an optimistic lock.
+
+
+## How to build?
+
+Clone this repo into new project folder (e.g., `base-orchestrator`).
+
+```bash
+git clone https://github.com/DanielMachadoVasconcelos/base-orchestrator.git
+cd base-orchestrato
+```
+
+Start the external resources by running the docker-compose file. (It may take a while to start all resources)
+```bash
+docker-compose up -d 
+```
+---
+
+Use the following commands to test the whole saga: (e.g., `makefile build and test`).
+```bash
+make bt
+```
 
 This database saves the list of events in order, ensured by an optimistic lock.
 
