@@ -4,6 +4,8 @@ import br.com.ead.sales.model.PlaceOrderRequest;
 import br.ead.home.clients.services.SalesClient;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import java.util.UUID;
 
@@ -18,7 +20,7 @@ public class OrderPLaceTest {
         var request = new PlaceOrderRequest(UUID.randomUUID().toString(), 100);
         client.placeOrder(request)
                 .expectStatus().isOk()
-                .expectHeader().valueEquals("Content-Type", "application/json")
+                .expectHeader().valueEquals(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .expectBody().jsonPath("amount").isEqualTo(100);
     }
 }
