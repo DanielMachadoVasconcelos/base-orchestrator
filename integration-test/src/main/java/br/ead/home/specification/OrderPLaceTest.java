@@ -21,6 +21,6 @@ public class OrderPLaceTest {
         client.placeOrder(request)
                 .expectStatus().isOk()
                 .expectHeader().valueEquals(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .expectBody().jsonPath("amount").isEqualTo(100);
+                .expectBody().jsonPath("place_order_amount").isEqualTo(100);
     }
 }

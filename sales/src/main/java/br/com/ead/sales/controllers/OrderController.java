@@ -1,6 +1,8 @@
 package br.com.ead.sales.controllers;
 
+import br.com.ead.sales.entities.Order;
 import br.com.ead.sales.model.PlaceOrderRequest;
+import br.com.ead.sales.services.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,9 +15,10 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/services/")
 public class OrderController {
 
-    //TODO: Implement the service layer. Persist the order in database. Emit the OrderPLacedEvent in kafka.
+    private OrderService orderService;
+
     @PostMapping(path = "/orders")
-    private Mono<PlaceOrderRequest> pokeServiceUri(@RequestBody PlaceOrderRequest request) {
-        return Mono.fromCallable(() -> request);
+    private Mono<Order> pokeServiceUri(@RequestBody PlaceOrderRequest request) {
+        return orderService.placeOrder(request);
     }
 }
