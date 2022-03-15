@@ -1,6 +1,7 @@
 package br.com.ead.sales.services;
 
 import br.com.ead.sales.entities.Order;
+import br.com.ead.sales.model.OrderStatus;
 import br.com.ead.sales.model.PlaceOrderRequest;
 import br.com.ead.sales.repositories.OrderRepository;
 import lombok.AllArgsConstructor;

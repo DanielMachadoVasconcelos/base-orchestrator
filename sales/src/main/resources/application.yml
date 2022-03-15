@@ -15,4 +15,4 @@ spring:
     date-format: yyyy-MM-dd'T'HH:mm
 
   elasticsearch:
-    uris: "http://elasticsearch:9200"
+    uris: "http://localhost:9200"

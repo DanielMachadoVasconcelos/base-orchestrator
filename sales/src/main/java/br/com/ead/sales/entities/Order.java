@@ -1,5 +1,6 @@
 package br.com.ead.sales.entities;
 
+import br.com.ead.sales.model.OrderStatus;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;

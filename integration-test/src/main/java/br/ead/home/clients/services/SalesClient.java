@@ -17,7 +17,7 @@ public class SalesClient {
         client = WebTestClient.bindToServer()
                 .filter(ExchangeFilterFunctions.basicAuthentication("user", "password"))
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .baseUrl("http://sales:8082")
+                .baseUrl("http://localhost:8082")
                 .build();
     }
 

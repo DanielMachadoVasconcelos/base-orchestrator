@@ -17,10 +17,22 @@ public class OrderPLaceTest {
     @DisplayName("Should be able to place a order when user requesting a purchase")
     void shouldPlaceOrderWhenRequested() {
 
-        var request = new PlaceOrderRequest(UUID.randomUUID().toString(), 100);
-        client.placeOrder(request)
-                .expectStatus().isOk()
+        //given: A place order request
+        var expectedOrderId = UUID.randomUUID().toString();
+        var expectedOrderAmount = 100;
+        var request = new PlaceOrderRequest(expectedOrderId, expectedOrderAmount);
+
+        //when: placing the order
+        var response = client.placeOrder(request);
+
+        //then: the response is successful
+        response.expectStatus().isOk()
                 .expectHeader().valueEquals(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .expectBody().jsonPath("place_order_amount").isEqualTo(100);
+                .expectBody().jsonPath("place_order_amount").isEqualTo(expectedOrderAmount);
+
+        //and: package label is generated
+
+        //and: a payment reservation is created
+
     }
 }
