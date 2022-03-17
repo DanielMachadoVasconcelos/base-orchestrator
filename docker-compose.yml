@@ -20,6 +20,35 @@ services:
       timeout: 1s
       retries: 10
 
+  zookeeper:
+    image: bitnami/zookeeper
+    container_name: zookeeper
+    networks:
+      - integration-test
+    ports:
+      - "2181:2181"
+    volumes:
+      - "zookeeper_data:/bitnami"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    image: bitnami/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    networks:
+      - integration-test
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+    depends_on:
+      - zookeeper
+
   sales:
     container_name: sales
     build:
@@ -29,12 +58,11 @@ services:
       - "8082:8082"
     depends_on:
       - elasticsearch
+      - kafka
     networks:
       - integration-test
     healthcheck:
       test: "curl -f http://sales:8082/actuator/health"
-      interval: 1s
-      timeout: 1s
       retries: 10
 
   integration-tests:
@@ -49,7 +77,12 @@ services:
       - integration-test
 
 volumes:
+  zookeeper_data:
+    driver: local
   sales-database:
+  postgres_data:
+    driver: local
+  kafka_data:
     driver: local
 
 networks:

@@ -16,3 +16,12 @@ spring:
 
   elasticsearch:
     uris: "http://localhost:9200"
+
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    listener:
+      ack-mode: record
+      concurrency: 3
+    producer:
+      key-serializer: org.springframework.kafka.support.serializer.StringOrBytesSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

@@ -6,6 +6,7 @@ import br.com.ead.sales.model.PlaceOrderRequest;
 import br.com.ead.sales.repositories.OrderRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class OrderService {
 
     private OrderRepository repository;
+    private OrderProducer producer;
 
     public Mono<Order> placeOrder(PlaceOrderRequest request){
         return repository.save(
@@ -28,6 +30,9 @@ public class OrderService {
                                 .orElseGet(UUID.randomUUID()::toString))
                         .placeOrderAmount(request.amount())
                         .createdAt(OffsetDateTime.now())
-                        .build());
+                        .build())
+                .doOnError(error -> log.error("There were a error while saving the order into database!", error))
+                .doOnSuccess(item -> log.info("Order was successful saved into database! {}", item))
+                .doOnSuccess(item -> producer.send(item));
     }
 }
