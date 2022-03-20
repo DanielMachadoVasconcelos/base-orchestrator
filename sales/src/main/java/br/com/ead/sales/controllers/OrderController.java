@@ -1,7 +1,7 @@
 package br.com.ead.sales.controllers;
 
-import br.com.ead.sales.entities.Order;
-import br.com.ead.sales.model.PlaceOrderRequest;
+import br.com.ead.sales.entities.OrderEntity;
+import br.com.ead.sales.controllers.requests.PlaceOrderRequest;
 import br.com.ead.sales.services.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +18,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping(path = "/orders")
-    private Mono<Order> pokeServiceUri(@RequestBody PlaceOrderRequest request) {
+    private Mono<OrderEntity> pokeServiceUri(@RequestBody PlaceOrderRequest request) {
         return orderService.placeOrder(request);
     }
 }

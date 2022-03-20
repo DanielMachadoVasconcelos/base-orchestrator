@@ -1,6 +1,6 @@
 package br.ead.home.clients.services;
 
-import br.com.ead.sales.model.PlaceOrderRequest;
+import br.com.ead.sales.controllers.requests.PlaceOrderRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

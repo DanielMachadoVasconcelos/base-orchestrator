@@ -1,4 +1,4 @@
-package br.com.ead.sales.model;
+package br.com.ead.sales.controllers.requests;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;

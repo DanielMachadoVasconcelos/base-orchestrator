@@ -1,4 +1,4 @@
-package br.com.ead.sales.model;
+package br.com.ead.sales.entities;
 
 public enum OrderStatus {
 

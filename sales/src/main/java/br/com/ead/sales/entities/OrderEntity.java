@@ -1,6 +1,6 @@
 package br.com.ead.sales.entities;
 
-import br.com.ead.sales.model.OrderStatus;
+import br.com.ead.sales.model.Order;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(indexName = "orders", versionType = Document.VersionType.EXTERNAL)
-public class Order {
+public class OrderEntity implements Order {
 
     @Id
     String orderId;

@@ -1,6 +1,6 @@
 package br.ead.home.specification;
 
-import br.com.ead.sales.model.PlaceOrderRequest;
+import br.com.ead.sales.controllers.requests.PlaceOrderRequest;
 import br.ead.home.clients.services.SalesClient;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
