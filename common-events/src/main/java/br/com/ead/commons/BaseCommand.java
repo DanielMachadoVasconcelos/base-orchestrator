@@ -1,6 +1,6 @@
-package br.com.ead.sales.commands;
+package br.com.ead.commons;
 
-import br.com.ead.commons.Message;
+import br.com.ead.Message;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

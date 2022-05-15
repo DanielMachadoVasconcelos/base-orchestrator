@@ -1,4 +1,4 @@
-package br.com.ead.sales.infrastructure;
+package br.com.ead.payments.producers;
 
 import br.com.ead.commons.BaseEvent;
 import br.com.ead.infrastructure.EventProducer;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class OrderEventProducer implements EventProducer {
+public class BillingEventProducer implements EventProducer {
 
     KafkaTemplate<String, Object> kafkaTemplate;
 

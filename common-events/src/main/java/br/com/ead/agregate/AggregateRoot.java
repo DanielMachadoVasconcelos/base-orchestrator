@@ -1,4 +1,4 @@
-package br.com.ead.sales.agregate;
+package br.com.ead.agregate;
 
 import br.com.ead.commons.BaseEvent;
 

@@ -3,7 +3,7 @@ package br.com.ead.sales.controllers;
 import br.com.ead.sales.commands.OrderPLaceCommand;
 import br.com.ead.sales.commons.dtos.BaseResponse;
 import br.com.ead.sales.commons.dtos.OrderPLaceResponse;
-import br.com.ead.sales.infrastructure.CommandDispatcher;
+import br.com.ead.infrastructure.CommandDispatcher;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

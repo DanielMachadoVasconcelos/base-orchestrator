@@ -1,4 +1,4 @@
-package br.com.ead.sales.infrastructure;
+package br.com.ead.infrastructure;
 
 import br.com.ead.commons.BaseEvent;
 

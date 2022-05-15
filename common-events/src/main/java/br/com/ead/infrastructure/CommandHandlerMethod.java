@@ -1,6 +1,6 @@
-package br.com.ead.sales.infrastructure;
+package br.com.ead.infrastructure;
 
-import br.com.ead.sales.commands.BaseCommand;
+import br.com.ead.commons.BaseCommand;
 
 @FunctionalInterface
 public interface CommandHandlerMethod<T extends BaseCommand> {

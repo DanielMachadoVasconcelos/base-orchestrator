@@ -1,4 +1,4 @@
-package br.com.ead.commons;
+package br.com.ead;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

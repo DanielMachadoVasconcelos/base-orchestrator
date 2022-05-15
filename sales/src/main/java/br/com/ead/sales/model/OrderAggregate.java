@@ -3,7 +3,7 @@ package br.com.ead.sales.model;
 import br.com.ead.sales.OrderLine;
 import br.com.ead.sales.OrderPLacedEvent;
 import br.com.ead.sales.PaymentMethod;
-import br.com.ead.sales.agregate.AggregateRoot;
+import br.com.ead.agregate.AggregateRoot;
 import br.com.ead.sales.commands.OrderPLaceCommand;
 import lombok.Data;
 import lombok.NoArgsConstructor;

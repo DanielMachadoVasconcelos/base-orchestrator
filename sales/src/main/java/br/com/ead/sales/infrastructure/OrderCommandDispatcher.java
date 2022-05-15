@@ -1,6 +1,8 @@
 package br.com.ead.sales.infrastructure;
 
-import br.com.ead.sales.commands.BaseCommand;
+import br.com.ead.infrastructure.CommandDispatcher;
+import br.com.ead.infrastructure.CommandHandlerMethod;
+import br.com.ead.commons.BaseCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

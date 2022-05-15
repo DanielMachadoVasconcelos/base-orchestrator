@@ -1,4 +1,4 @@
-package br.com.ead.payments.consumers;
+package br.com.ead.orchestrator.consumers.sales;
 
 import br.com.ead.sales.OrderPLacedEvent;
 import lombok.AllArgsConstructor;
@@ -15,5 +15,7 @@ public class OrderPLaceConsumer {
     @KafkaListener(topics = "OrderPLacedEvent", groupId = "${spring.kafka.consumer.group-id}")
     public void consumer(@Payload OrderPLacedEvent event) {
         log.info("Order PLaced Event received. {}", event);
+        log.info("TODO: should persist the OrderPLacedEvent into the order saga.");
+        log.info("TODO: should emit an command to sales to reserve or charge the order amount.");
     }
 }

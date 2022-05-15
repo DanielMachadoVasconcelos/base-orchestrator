@@ -1,4 +1,4 @@
-package br.com.ead.sales.agregate;
+package br.com.ead.agregate;
 
 public abstract class BaseEntity {
 }

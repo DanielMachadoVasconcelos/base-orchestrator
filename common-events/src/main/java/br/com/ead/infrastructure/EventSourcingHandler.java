@@ -1,6 +1,6 @@
-package br.com.ead.sales.infrastructure;
+package br.com.ead.infrastructure;
 
-import br.com.ead.sales.agregate.AggregateRoot;
+import br.com.ead.agregate.AggregateRoot;
 
 public interface EventSourcingHandler<T> {
 
