@@ -1,8 +1,8 @@
 package br.ead.home.specification;
 
+import br.com.ead.sales.OrderLine;
+import br.com.ead.sales.PaymentMethod;
 import br.com.ead.sales.commands.OrderPLaceCommand;
-import br.com.ead.sales.model.OrderLine;
-import br.com.ead.sales.model.PaymentMethod;
 import br.ead.home.clients.services.SalesClient;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package br.com.ead.sales.commands;
 
-import br.com.ead.sales.model.OrderLine;
-import br.com.ead.sales.model.PaymentMethod;
+import br.com.ead.sales.OrderLine;
+import br.com.ead.sales.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

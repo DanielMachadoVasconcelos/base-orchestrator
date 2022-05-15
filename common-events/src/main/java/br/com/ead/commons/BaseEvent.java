@@ -1,4 +1,4 @@
-package br.com.ead.sales.events;
+package br.com.ead.commons;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

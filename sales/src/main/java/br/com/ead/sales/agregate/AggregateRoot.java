@@ -1,6 +1,6 @@
 package br.com.ead.sales.agregate;
 
-import br.com.ead.sales.events.BaseEvent;
+import br.com.ead.commons.BaseEvent;
 
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;

@@ -1,4 +1,4 @@
-package br.com.ead.payments.events;
+package br.com.ead.commons;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

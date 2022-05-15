@@ -1,7 +1,7 @@
 package br.com.ead.sales.infrastructure;
 
+import br.com.ead.commons.BaseEvent;
 import br.com.ead.sales.agregate.AggregateRoot;
-import br.com.ead.sales.events.BaseEvent;
 import br.com.ead.sales.model.OrderAggregate;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,6 @@
 plugins {
     id "java"
     id 'com.github.johnrengelman.shadow' version '7.1.2'
-    id "com.avast.gradle.docker-compose" version "0.14.9"
-
 }
 
 configurations {
@@ -11,21 +9,10 @@ configurations {
     }
 }
 
-apply plugin: 'com.avast.gradle.docker-compose'
-
-dockerCompose.isRequiredBy(test)
-
-dockerCompose {
-    projectName = project.name
-    projectNamePrefix = 'docker-compose'
-    stopContainers = true
-    removeContainers = true
-    removeOrphans = true
-}
-
 dependencies {
 
     implementation project(':sales')
+    implementation project(':common-events')
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-test:2.6.3'

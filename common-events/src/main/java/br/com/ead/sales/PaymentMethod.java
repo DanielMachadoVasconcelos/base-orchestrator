@@ -1,4 +1,4 @@
-package br.com.ead.payments.model;
+package br.com.ead.sales;
 
 public enum PaymentMethod {
 

@@ -1,7 +1,7 @@
 package br.com.ead.sales.infrastructure;
 
-import br.com.ead.sales.events.BaseEvent;
-import br.com.ead.sales.events.EventModel;
+import br.com.ead.commons.BaseEvent;
+import br.com.ead.sales.model.EventModel;
 import br.com.ead.sales.exceptions.AggregateNotFoundException;
 import br.com.ead.sales.exceptions.ConcurrencyException;
 import br.com.ead.sales.model.OrderAggregate;

@@ -1,5 +1,6 @@
-package br.com.ead.sales.events;
+package br.com.ead.sales.model;
 
+import br.com.ead.commons.BaseEvent;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;

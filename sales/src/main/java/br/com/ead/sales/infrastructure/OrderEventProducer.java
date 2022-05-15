@@ -1,6 +1,6 @@
 package br.com.ead.sales.infrastructure;
 
-import br.com.ead.sales.events.BaseEvent;
+import br.com.ead.commons.BaseEvent;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package br.com.ead.sales.repositories;
 
-import br.com.ead.sales.events.EventModel;
+import br.com.ead.sales.model.EventModel;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
