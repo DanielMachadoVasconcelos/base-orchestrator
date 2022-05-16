@@ -23,11 +23,5 @@ jobs:
         with:
           java-version: 17
           distribution: 'adopt'
-      - name: build the applications
-        run: make shadowJar
-      - name: stating the infra structure
-        run: make infra
-      - name: satarting the sales application
-        run: make startSales
-      - name: executing the integration test
-        run: make test
+      - name: builda and test the application
+        run: make bt
