@@ -31,11 +31,6 @@ services:
       - "zookeeper_data:/bitnami"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
-    healthcheck:
-      test: [ "CMD", "kafka-topics.sh", "--list", "--zookeeper", "zookeeper:2181" ]
-      interval: 1s
-      timeout: 1s
-      retries: 30
 
   kafka:
     image: bitnami/kafka
@@ -53,6 +48,11 @@ services:
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
     depends_on:
       - zookeeper
+    healthcheck:
+      test: [ "CMD", "kafka-topics.sh", "--list", "--zookeeper", "zookeeper:2181" ]
+      interval: 1s
+      timeout: 1s
+      retries: 15
 
   sales:
     container_name: sales
