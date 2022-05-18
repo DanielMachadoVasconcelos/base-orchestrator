@@ -56,7 +56,6 @@ services:
 
   sales:
     container_name: sales
-    restart: on-failure
     build:
       context: sales
       dockerfile: Dockerfile
