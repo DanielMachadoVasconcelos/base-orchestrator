@@ -12,7 +12,7 @@ done
 
 while [[ "$(curl -k -s -o /dev/null -w '%{http_code}\n' 'http://sales:8082/actuator/health/readiness')" != "200" ]]; do
   >&2 echo "Integration Test - Sales not started. Will sleep for 5 seconds."
-  sleep 15;
+  sleep 45;
 done
 
 >&2 echo "Integration Test - Sales has started. Up and running."
