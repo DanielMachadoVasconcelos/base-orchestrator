@@ -43,26 +43,17 @@ buildscript {
     dependencies {
         classpath 'io.freefair.gradle:lombok-plugin:5.3.3.3'
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-//        classpath "gradle.plugin.com.avast.gradle:gradle-docker-compose-plugin:${dockerComposeVersion}"
     }
 }
-
-//TODO: This is being replaced by the Make file
-//apply plugin: 'com.avast.gradle.docker-compose'
-//
-//dockerCompose.isRequiredBy(test)
-//
-//dockerCompose {
-//    projectName = project.name
-//    projectNamePrefix = 'docker-compose'
-//    stopContainers = true
-//    removeContainers = true
-//    removeOrphans = true
-//}
 
 test {
     useJUnitPlatform()
     testLogging {
-        events "skipped", "failed"
+        showStandardStreams = true
+        events 'skipped', 'failed'
+        debug {
+            events "failed"
+            exceptionFormat "full"
+        }
     }
 }

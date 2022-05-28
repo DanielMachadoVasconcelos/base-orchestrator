@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.8'
 services:
 
   elasticsearch:
@@ -15,41 +15,83 @@ services:
     volumes:
       - sales-database:/usr/share/elasticsearch/data
     healthcheck:
-      test: "curl -f elasticsearch:9200/_cluster/health?wait_for_status=green&timeout=25s || exit 1"
+      test: "curl -f elasticsearch:9200/_cluster/health?wait_for_status=yellow&timeout=2s || exit 1"
       interval: 1s
       timeout: 1s
       retries: 10
+
+  zookeeper:
+    image: bitnami/zookeeper
+    container_name: zookeeper
+    networks:
+      - integration-test
+    ports:
+      - "2181:2181"
+    volumes:
+      - "zookeeper_data:/bitnami"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    image: bitnami/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    networks:
+      - integration-test
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+    depends_on:
+      - zookeeper
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "localhost", "9092"]
+      interval: 1s
+      timeout: 1s
+      retries: 15
 
   sales:
     container_name: sales
     build:
       context: sales
       dockerfile: Dockerfile
+    environment:
+      ACTIVE_PROFILE: "integration-test"
     ports:
       - "8082:8082"
     depends_on:
       - elasticsearch
+      - kafka
     networks:
       - integration-test
     healthcheck:
       test: "curl -f http://sales:8082/actuator/health"
       interval: 1s
       timeout: 1s
-      retries: 10
+      retries: 30
 
   integration-tests:
     container_name: integration-test
     build:
       context: integration-test
       dockerfile: Dockerfile
+    environment:
+      SALES_HOST: "sales"
     depends_on:
       - sales
-      - elasticsearch
     networks:
       - integration-test
 
 volumes:
+  zookeeper_data:
+    driver: local
   sales-database:
+    driver: local
+  kafka_data:
     driver: local
 
 networks:

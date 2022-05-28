@@ -1,62 +1,57 @@
 package br.com.ead.sales.security;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.server.SecurityWebFilterChain;
-import reactor.core.publisher.Mono;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 
-@EnableWebFluxSecurity
-public class SecurityConfiguration {
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
-    @Bean
-    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
-        return http.csrf().disable()
-                .exceptionHandling()
-                .accessDeniedHandler((swe, e) -> Mono.fromRunnable(() -> swe.getResponse().setStatusCode(HttpStatus.FORBIDDEN)))
-                .and()
-                .authorizeExchange()
-                .pathMatchers("/services/**").hasAuthority("ROLE_USER")
-                .pathMatchers("/services/**").hasAuthority("ROLE_ADMIN")
-                .pathMatchers("/actuator/**").permitAll()
-                .anyExchange().authenticated()
-                .and()
-                .httpBasic()
-                .and()
-                .formLogin().disable()
-                .build();
-    }
+@Log4j2
+@Configuration
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    /**
-     * Just for the sake of simplicity I am using an inmemory user details provider.
-     * This could be replaced by a keycloak adapter, OpenID Provider or OAuth2 Server Authenticator.
-     *
-     * @param encoder The password encoder
-     * @return A Map based implementation of ReactiveUserDetailsService
-     */
-    @Bean
-    public MapReactiveUserDetailsService userDetailsService(PasswordEncoder encoder) {
-        var user = User
-                .withUsername("user")
-                .password(encoder.encode("password"))
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("user")
+                .password(passwordEncoder.encode("password"))
                 .roles("USER")
-                .build();
-
-        var admin = User
-                .withUsername("admin")
-                .password(encoder.encode("password"))
-                .roles("ADMIN")
-                .build();
-        return new MapReactiveUserDetailsService(user, admin);
+                .and()
+                .withUser("admin")
+                .password(passwordEncoder.encode("password"))
+                .roles("ADMIN", "USER");
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        BasicAuthenticationEntryPoint basicAuthEntryPoint = new BasicAuthenticationEntryPoint();
+        basicAuthEntryPoint.setRealmName("order-realm");
+
+        http.cors().disable()
+                .csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(basicAuthEntryPoint)
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.TRACE).denyAll()
+                .antMatchers("/actuator/**").permitAll()
+                .antMatchers("/ping").permitAll()
+                .antMatchers("/metrics").permitAll()
+                .antMatchers("/healthcheck").permitAll()
+                .antMatchers("/health").permitAll()
+                .antMatchers( "/api/v1/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/v1/**").denyAll()
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement().sessionCreationPolicy(STATELESS)
+                .and()
+                .httpBasic();
     }
 }

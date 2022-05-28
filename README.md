@@ -57,3 +57,14 @@ Use the following commands to test the whole saga: (e.g., `makefile build and te
 ```bash
 make bt
 ```
+
+#### Change /etc/hosts file
+Since the tests depend on the available resources, to make it easier to test add this to your /etc/hosts file
+
+```conf
+# host mapping for the base orchestrator
+127.0.0.1 kafka
+127.0.0.1 sales
+127.0.0.1 elasticsearch
+127.0.0.1 zookeeper
+```

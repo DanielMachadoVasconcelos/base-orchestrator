@@ -1,0 +1,14 @@
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: ALWAYS
+      enabled: true
+
+spring:
+  elasticsearch:
+    uris: "http://elasticsearch:9200"
+
+  kafka:
+    bootstrap-servers: "kafka:9092"
