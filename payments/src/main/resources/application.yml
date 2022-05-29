@@ -20,11 +20,9 @@ spring:
 
   kafka:
     producer:
-      bootstrap-servers: ${KAFKA_HOST}
       key-serializer: org.springframework.kafka.support.serializer.StringOrBytesSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
-      bootstrap-servers: ${KAFKA_HOST}
       group-id: "payment-service-consumer"
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer

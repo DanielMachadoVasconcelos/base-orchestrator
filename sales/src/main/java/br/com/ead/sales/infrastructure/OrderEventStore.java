@@ -6,6 +6,7 @@ import br.com.ead.sales.model.EventModel;
 import br.com.ead.sales.exceptions.AggregateNotFoundException;
 import br.com.ead.sales.exceptions.ConcurrencyException;
 import br.com.ead.sales.model.OrderAggregate;
+import br.com.ead.sales.producer.OrderEventProducer;
 import br.com.ead.sales.repositories.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

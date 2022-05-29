@@ -15,7 +15,7 @@ public class OrderBilledConsumer {
     @KafkaListener(topics = "OrderBilledEvent", groupId = "${spring.kafka.consumer.group-id}")
     public void consumer(@Payload OrderBilledEvent event) {
         log.info("Order Billed Event received. {}", event);
-        log.info("TODO: should persist the OrderBilledEvent into the order saga.");
-        log.info("TODO: should emit an command to warehouse to reserve or label the order items.");
+        log.warn("TODO: should persist the OrderBilledEvent into the order saga.");
+        log.warn("TODO: should emit an command to warehouse to reserve or label the order items.");
     }
 }

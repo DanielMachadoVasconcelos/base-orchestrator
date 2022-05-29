@@ -19,8 +19,13 @@ spring:
     date-format: yyyy-MM-dd'T'HH:mm
 
   kafka:
+    listener:
+      ack-mode: record
+      concurrency: 1
+    producer:
+      key-serializer: org.springframework.kafka.support.serializer.StringOrBytesSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
-      bootstrap-servers: ${KAFKA_HOST}
       group-id: "orchestrator-consumer"
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer

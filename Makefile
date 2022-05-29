@@ -35,4 +35,4 @@ test: #Build & docker-compose teste
 	docker-compose up integration-tests --abort-on-container-exit -V --build
 
 bt: #Build & docker-compose test
-	$(GW_PARALLEL) clean build shadowJar && docker-compose up --abort-on-container-exit -V --build
+	$(GW_PARALLEL) clean build shadowJar && docker-compose up --abort-on-container-exit -V --build --remove-orphans

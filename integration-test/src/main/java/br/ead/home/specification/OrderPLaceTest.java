@@ -4,6 +4,7 @@ import br.com.ead.sales.OrderLine;
 import br.com.ead.sales.PaymentMethod;
 import br.com.ead.sales.commands.OrderPLaceCommand;
 import br.ead.home.clients.services.SalesClient;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -19,15 +20,18 @@ public class OrderPLaceTest {
     @Test
     @DisplayName("Should be able to place a order when user requesting a purchase")
     void shouldPlaceOrderWhenRequested() {
+        //setup:
+        var randomUnitPrice = Math.ceil(RandomUtils.nextDouble(10, 20));
+        var randomQuantity = RandomUtils.nextInt(1, 10);
 
         //given: A place order command
-        var expectedOrderAmount = 100;
+        var expectedOrderAmount = randomQuantity * randomUnitPrice;
         var expectedCustomerId = UUID.randomUUID().toString();
         var expectedProductId = UUID.randomUUID().toString();
         var orderLine = OrderLine.builder()
                 .productId(expectedProductId)
-                .quantity(1)
-                .unitPrice(20.0D).build();
+                .quantity(randomQuantity)
+                .unitPrice(randomUnitPrice).build();
 
         var command = new OrderPLaceCommand(expectedOrderAmount,
                 expectedCustomerId,

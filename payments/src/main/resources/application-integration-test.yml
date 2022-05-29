@@ -7,11 +7,7 @@ management:
       enabled: true
 
 spring:
-  elasticsearch:
-    uris: "http://elasticsearch:9200"
 
   kafka:
     bootstrap-servers: "localhost:29092"
-    producer:
-      bootstrap-servers: "localhost:29092"
 

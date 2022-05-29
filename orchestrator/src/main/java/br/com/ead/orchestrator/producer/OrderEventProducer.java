@@ -1,5 +1,6 @@
-package br.com.ead.payments.producers;
+package br.com.ead.orchestrator.producer;
 
+import br.com.ead.commons.BaseCommand;
 import br.com.ead.commons.BaseEvent;
 import br.com.ead.infrastructure.EventProducer;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Log4j2
 @Service
 @AllArgsConstructor
-public class BillingEventProducer implements EventProducer {
+public class OrderEventProducer implements EventProducer {
 
     KafkaTemplate<String, Object> kafkaTemplate;
 
@@ -18,5 +19,10 @@ public class BillingEventProducer implements EventProducer {
     public void producer(String topic, BaseEvent event) {
         log.info("Received a Event to be publish. Topic={}, Event={}", topic, event);
         this.kafkaTemplate.send(topic, event);
+    }
+
+    public void producer(String topic, BaseCommand command) {
+        log.info("Received a Event to be publish. Topic={}, Command={}", topic, command);
+        this.kafkaTemplate.send(topic, command);
     }
 }
